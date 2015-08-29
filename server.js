@@ -24,6 +24,10 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/main.html');
 });
 
+app.get('/stacks', function(req, res) {
+  res.sendFile(__dirname + '/stacks.html')
+});
+
 var server = app.listen(3002, function () {
   var host = server.address().address;
   var port = server.address().port;
