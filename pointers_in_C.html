@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<center><h1>Data Structures</h1>
+<p><font size="4">A website by Tim McHale</font></p></center>
+<br>
+
+
+<h3>Intro: The C programming language</h3>
+
+<h4>Why learn to program in C?</h4>
+
+<ul>
+	<li>C is the <i>de facto</i> standard of programming languages</li>
+	<li>Programming languages such as Java, Python, Ruby, and R are written in C or a mix of C and Assembly. In this way C is like Latin, syntatically influential and quite literally exexcuted when running programs in other languages</li>
+	<li>C runs on everything</li>
+	<li>C allows you to write programs use very little resources and gives the programmer complete control over the system, down to the level of manipulating bits by hand</li>
+	<li>C is for engineered projects: Operating Systems, Compilers, embbed processors on weapons, serious stuff</li>
+</ul>
+
+<p>On the other hand, there are many reasons to not use C</p>
+<ul>
+	<li>C is hard, pain is a powerful teacher of caution</li>
+	<li>No garbage collector</li>
+	<li>Minimal programmer-protection features like bounds checking</li>
+	<li>Language support for exceptions, namespaces, object-oriented programming</li>
+	<li>Non-trivial built-in data structures</li>
+</ul>
+
+<p>For most problems where minimizing programmer time and maximizing robustness are more important than minimizing runtime, other languages are a better choice</p>
+
+<h3>Pointers</h3>
+<p>Memory in a typical modern computer is divided into two classes: a small number of registers, which live on the CPU chip and perform specialized functions like keeping track of the location of the next machine code instruction to execute or the current stack frame, and main memory, which (mostly) lives outside the CPU chip and which stores the code and data of a running program. When the CPU wants to fetch a value from a particular location in main memory, it must supply an address: a 32-bit or 64-bit unsigned integer on typical current architectures, referring to one of up to 232 or 264 distinct 8-bit locations in the memory. These integers can be manipulated like any other integer; in C, they appear as pointers, a family of types that can be passed as arguments, stored in variables, returned from functions, etc.</p>
+
+<p><b>Pointer Variables</b></p>
+
+<p>A pointer variable is a variable that holds a pointer, typically will be allocated 8 bytes of memory</p>
+<p><b>Using pointers</b></p>
+
+<p>To use a pointer first initialize a variable in memory</p>
+
+<p><blockquote>int i = 5, z[10]; // assigns the value 5 to i<br>int *ip; // initializes a pointer of type int<br>ip = &i; // assigns the address of i to the int pointer ip
+<br> printf(*ip); // will print 5
+<br> ip = &z[0]; // assigns the memory address of the beginning of the array to ip</blockquote></p>
+
+<p>*As a note K&R does not name the & operator.<br><br>
+The & operator only applies to objects in memory: variables and array elements. It cannot be 
+applied to expressions, constants, or register variables. <br><br>
+The * or dereferencing operator when prefixed to a pointer accesses the object it points to
+</p>
+
+<h3>Pointers and Function Arguments</h3>
+
+<p>Since C passes arguments to functions by value, there is no way for the called function to alter a variable in the calling function. The way for a function to access the memory location of a variable is to pass pointers as the function argument.</p>
+
+<p><blockquote>void swap(int *px, int *py)<br>{<br>int temp;<br>temp = *px;<br>*px = *py;<br>}</blockquote></p>
+
+<h3>Pointers and Arrays</h3>
+
+<p>In C, there is a strong relationship between pointers and arrays, strong enough that pointers and arrays should be discussed simultaneously. Any operation that can be achieved by array subscripting can also be done with pointers. The pointer version will in general be faster but, at least to the uninitiated, somewhat harder to understand.</p>
+
+<p>The declaration <br><blockquote>int a[10];</blockquote><br> defines an array of size ten, that is, a block of ten consecutive objects named a[0], a[1],...a[9]<br>Then if you assign ip = &a[0]; it sets the memory address of the first element of the array. If ip points to the first element, then by defineition ip+1 points to the next element, and *(ip + 1) would hold the value in the next element in the array.</p>
+
+<p>*As a note ip = &a[0; Can also be written as ip = a; In evaluating a[i], the C compiler converts it to *(a + i) </p>
+
+<h2>Structures</h2>
+
+<p><b>Initializing</b></p>
+<p><blockquote>struct point {
+<blockquote>int x;<br>int y;</blockquote>};</blockquote></p>
+
+<p><b>Inititalizing a struct within a struct</b></p>
+
+<p><blockquote>struct rect {<br><blockquote>struct point pt1;<br>struct point pt2;</blockquote>};</blockquote></p>
+
+<p><blockquote>struct rect square;<br>square.pt1.x = 0;<br>printf("This will equal zero -> %d", square.pt1.x); // Will print the 0</p>
+
+<p><br>Structures and Functions</br></p>
+
+<p>The only legal operations on a structure are copying it or assigning to it as a unit, taking its address with &, and accessing its members. Copy and assignment include passing arguments to functions and returning values from functions as well. Structs may not be compared, a structure may be inititalized by a list of contstant member values.</p>
+
+<p><b>Examples</b></p>
+
+<p><blockquote>struct point makepoint(int x, int y) { // Will return a struct
+<br><blockquote>struct point temp;<br>temp.x = x;<br>temp.x;<br>temp.y;<br>return temp;</blockquote>}</blockquote></p>
+
+<p>You can pass a struct to a pointer. Then pass that pointer into a function, and within that fuction dereference the pointer and manipulate those values. <br> <blockquote>struct point *pp<br>struct point origin;<br> pp = &origin; <br> printf("origin is (%d,%d)\n",(*pp).x,(*pp.y);)</blockquote><p>
+
+<p>The parentheses are necessary in (*pp).x because the precedence of the structure member operator . is higher than *. <br><br> Pointers to structures are so frequently used that an alternative notation is provided as a shorthand. If p is a pointer to a structure, then
+<br><br><breakpoint><b>p->member-of-a-structure</b></breakpoint></p>
+<p>So we could write printf("origin is (%d,%d)\n", pp->x, pp->y); instead. he structure operators . and ->, together with () for function calls and [] for subscripts, are at the top of the precedence hierarchy and thus bind very tightly.<br><br>For example ++p->len increments len not p.</p>
+
+<p><a href="http://45.55.254.125:3002/prefix-postfix">Chapter 1: Prefix and Postfix Notation</a></p>
+</body>
+</html>
