@@ -5,6 +5,10 @@ app.get('/prefix-postfix', function (req, res) {
   res.sendFile(__dirname + '/main.html');
 });
 
+app.get('/fileio', function(req,res) {
+	res.sendFile(__dirname + '/fileio.html')
+});
+
 app.get('/stacks', function(req, res) {
   res.sendFile(__dirname + '/stacks.html')
 });

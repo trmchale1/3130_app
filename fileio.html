@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<center><h1>Data Structures</h1>
+<p><font size="4">A website by Tim McHale</font></p></center>
+<br>
+
+
+<h3>File I/O in C++</h3>
+
+<p>In C++</p>
+<ul>
+  <li>cin reads from standard input</li>
+  <li>cout writes to standard output</li>
+  <li>cerr writes to standard error (a seperate output channel from standard output)</li>
+</ul>
+
+<p>BY DEFAULT</p>
+
+<ul>
+	<li>cin is the keyboard</li>
+	<li>cout is the screen</li>
+	<li>cerr is the screen</li>
+</ul>
+
+<p>The actual association of cin, cout, and cerr can be changed from their defaults to files <br><br> <blockquote>a.out > junk</blockquote></p>
+
+<p>Redirects the standard output of a.out to junk. If junk already existed, its contents are erased and the content goes in. If it didn't exist it is created. <br><br> <blockquote>a.out >> junk</blockquote></p>
+
+<p>Is similar except that if the file already existed the content is APPENDED to the end of it. <br><br> <blockquote>a.out 2> crap</blockquote> </p>
+
+<p>Redirect the standard error of a.out to crap<br><br><blockquote>a.out > junk 2>crap</blockquote></p>
+
+<p>Redirects the standard output of a.out to junk and the
+standard error crap.<br><br><blockquote>a.out < garbage</blockquote></p>
+
+<p>Redirects the standard input of a.out to come from garbage instead of the keyboard</p>
+
+<h3>Types of I/O</h3>
+
+<p>There are three kinds of text i/o:</p>
+<ul>
+	<li>character i/o<li>
+	<li>line i/o</li>
+	<li>token i/o</li>
+</ul>
+
+<p>(There are other kinds of i/o relating to binary data - png files, mp2s, execuables, video data, ect.)</p>
+
+<p>Character i/o means that the baic unit of input or output s a single character <br> <blockquote>cin.get(c);</blockquote><br> reads a single character from input into x. Note that the char read could be a space or a newline or a tab ect.</p>
+
+<p>Line i/o means that the basic unit of inout or outputis a complete LINE. A LINE is a sequence of zero or more characters terminated by a newline character. So there is ALWAYS a newline char in the line. If it is an "empty line" then it only consists of a \n<br><blockquote>cin.getline(s)</blockquote></p>
+
+<p>Token i/o means conceptually the stream of data is thought of as consisting of TOKENs. A TOKEN is a sequence of characters with no space or tab or newline characters. <br><blockquote>Consider    this line <br> of tokens</blockquote>Or<br><blockquote>Consider<br>this<br>line<br>of<br>tokens</blockquote></p>
+
+<p>The way to do token i/o in C++ is to use << and >> </p>
+
+<h3>End of Data</h3>
+
+<p>To test for condition that there is no more data it is more safe to use cin.fail() than cin.eof()</p>
+
+<p>The logic of input reading works best if you can check the result or outcome of your MOST recent attemot to read something.</p>
+
+<p>cin.fail() returns false if the last attempt to read was a SUCCESS</p>
+
+<p>So to read to end of data, you use the followung paradigm</p>
+
+<p><blockquote>attempt to read data<br>while (last attempt was successful) { <br> <blockquote>do something with the data<br> attemt to read more data</blockquote>}</blockquote></p>
+
+<p>Note that that it says "attempt to read data".<br>That's because when you write <br><blockquote>cin >> something;</blockquote><br>Or<br><blockquote>cin.getline(s)</blockquote><br> you CNNOT BE SURE the read was a success - you might have bumped in the end of the file. So you can only know if the read was a success until AFTER the read you check to see if it was a success.</p>
+
+<p>A concrete example of the above loop is: <br><blockquote>cin >> x; <br>while (!cin.fail()) {<br><blockquote>sum += x;<br>cin >> x;</blockquote>}</blockquote></p>
+
+<p>When you get out of the loop it is because !cin.fail() was false which means cin.fail() was true which means that the most recent cin>> operation failed which basically means you ran out of data.</p>
+
+<h3>Examples</h3>
+
+<p>To read data from a file instead of cin, you need to:<br><blockquote>#include 'fstream'</blockquote>declare an ifstream:<br><blockquote>ifstream infile</blockquote>open the ifstream (connect it to an actual file)<br><blockquote>infile.open("somefile");</blockquote>Check that the open succeeded:<br><blockquote>if(infile.fail() {<br><blockquote>//deal with the failure to open the file</blockquote></blockquote></p>
+
+<p>Then you can read from the file using the infile (or whatever) instead of cin:<br><blockquote>getline(infile,s);<br>infile >> x >> y;</blockquote></p>
+
+<p>When you are done reading (like after it fails because there is no more data) remains: <br> <blockquote>attempt to read<br>while(read successful){<blockquote>process read data<br>attempt to read again</blockquote>}</blockquote></p>
+
+<p><blockquote>cin >> something<br>while(!cin.fail()) {<br><blockquote>// process something<br>cin>>something</blockquote>}</blockquote></p>
+
+<p><blockquote>infile >> something;<br>while(!infile.fail()) {<br><blockquote>// process something<br>infile >> something;</blockquote>}</blockquote></p>
+
+</body>
+</html>
